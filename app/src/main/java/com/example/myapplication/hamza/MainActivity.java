@@ -4,6 +4,7 @@ package com.example.myapplication.hamza;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,13 +20,27 @@ import android.os.Bundle;
             setContentView(R.layout.activity_main);
 
             textView = findViewById(R.id.textView);
+//            resetButton = findViewById(R.id.button2);
         }
 
         Block[] blocks = {new Block(),new Block(),new Block(),
                 new Block(),new Block(),new Block(),
                 new Block(),new Block(),new Block()};
-        public static int Turn = -1;
+        public int Turn = -1;
+        public int gameState = 0;
         TextView textView;
+        ImageView img;
+        Button resetButton;
+//        public void reset(){
+//            for (int i = 0; i<blocks.length; i++){
+//                blocks[i] = new Block();
+//            }
+//            gameState = 0;
+//            for (int i = 0; i<blocks.length; i++){
+//                ImageView tempImgVar = img.findViewById(i);
+//                tempImgVar.setImageDrawable(null);
+//            }
+//        }
         public void checkWin(){
             if ((blocks[0] instanceof XBlock && blocks[1] instanceof XBlock && blocks[2] instanceof XBlock) ||
                     (blocks[3] instanceof XBlock && blocks[4] instanceof XBlock && blocks[5] instanceof XBlock) ||
@@ -37,6 +52,7 @@ import android.os.Bundle;
                     (blocks[2] instanceof XBlock && blocks[5] instanceof XBlock && blocks[8] instanceof XBlock) )
             {
                 textView.setText("X has won");
+                gameState = 1;
             } else if ((blocks[0] instanceof OBlock && blocks[1] instanceof OBlock && blocks[2] instanceof OBlock) ||
                     (blocks[3] instanceof OBlock && blocks[4] instanceof OBlock && blocks[5] instanceof OBlock) ||
                     (blocks[6] instanceof OBlock && blocks[7] instanceof OBlock && blocks[8] instanceof OBlock) ||
@@ -47,25 +63,30 @@ import android.os.Bundle;
                     (blocks[2] instanceof OBlock && blocks[5] instanceof OBlock && blocks[8] instanceof OBlock) )
             {
                 textView.setText("O has won");
+                gameState = 1;
             } else {
-                textView.setText("Draw");
+                textView.setText("draw");
             }
         }
 
-        public void Turn(View view){
-            ImageView img = (ImageView) view;
-            if (Turn == -1) {
-                blocks[Integer.parseInt(img.getTag().toString())] = new XBlock();
-                checkWin();
-                Turn = 1;
-                img.setImageResource(R.drawable.x);
+        public void Game(View view){
+            if (gameState == 0){
+                img = (ImageView) view;
+                if (Turn == -1) {
+                    blocks[Integer.parseInt(img.getTag().toString())] = new XBlock();
+                    checkWin();
+                    img.setImageResource(R.drawable.x);
+                }
+                if (Turn == 1){
+                    blocks[Integer.parseInt(img.getTag().toString())] = new OBlock();
+                    checkWin();
+                    img.setImageResource(R.drawable.o);
+                }
+                Turn *= -1;
             }
-            if (Turn == 1){
-                blocks[Integer.parseInt(img.getTag().toString())] = new OBlock();
-                checkWin();
-                Turn = -1;
-                img.setImageResource(R.drawable.o);
-            }
+//            if (gameState == 1){
+//                reset();
+//            }
         }
     }
 
