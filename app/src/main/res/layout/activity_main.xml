@@ -7,14 +7,31 @@
     android:background="#404040"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="258dp"
-        android:layout_height="66dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <Button
+        android:id="@+id/button"
+        android:layout_width="153dp"
+        android:layout_height="88dp"
+        android:onClick="reset"
+        android:text="Reset"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="280dp"
+        android:layout_height="94dp"
+        android:text="Tap to Play!"
+        android:textColor="#FFFCFC"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.687"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.525" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -49,7 +66,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:contentDescription="@string/img"
-                android:onClick="@string/Game"
+                android:onClick="Move"
                 android:tag="0" />
 
             <ImageView
@@ -57,8 +74,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:contentDescription="@string/img"
-                android:onClick="@string/Game"
+                android:contentDescription="image"
+                android:onClick="Move"
                 android:tag="1" />
 
             <ImageView
@@ -66,8 +83,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:contentDescription="@string/img"
-                android:onClick="@string/Game"
+                android:contentDescription="image"
+                android:onClick="Move"
                 android:tag="2" />
         </LinearLayout>
 
@@ -83,7 +100,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:contentDescription="@string/img"
-                android:onClick="@string/Game"
+                android:onClick="Move"
                 android:tag="3" />
 
             <ImageView
@@ -92,7 +109,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:contentDescription="@string/img"
-                android:onClick="@string/Game"
+                android:onClick="Move"
                 android:tag="4" />
 
             <ImageView
@@ -101,7 +118,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:contentDescription="@string/img"
-                android:onClick="@string/Game"
+                android:onClick="Move"
                 android:tag="5" />
         </LinearLayout>
 
@@ -117,7 +134,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:contentDescription="@string/img"
-                android:onClick="@string/Game"
+                android:onClick="Move"
                 android:tag="6" />
 
             <ImageView
@@ -126,7 +143,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:contentDescription="@string/img"
-                android:onClick="@string/Game"
+                android:onClick="Move"
                 android:tag="7" />
 
             <ImageView
@@ -135,20 +152,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:contentDescription="@string/img"
-                android:onClick="@string/Game"
+                android:onClick="Move"
                 android:tag="8" />
         </LinearLayout>
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="Button"
-        android:onClick="reset"
-        android:text="reset"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

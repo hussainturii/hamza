@@ -19,29 +19,43 @@ import android.os.Bundle;
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
 
-            textView = findViewById(R.id.textView);
-//            resetButton = findViewById(R.id.button2);
         }
 
         Block[] blocks = {new Block(),new Block(),new Block(),
                 new Block(),new Block(),new Block(),
                 new Block(),new Block(),new Block()};
-        public int Turn = -1;
-        public int gameState = 0;
+        public static int Turn = -1;
+        public boolean game = true;
         TextView textView;
         ImageView img;
-        Button resetButton;
-//        public void reset(){
-//            for (int i = 0; i<blocks.length; i++){
-//                blocks[i] = new Block();
-//            }
-//            gameState = 0;
-//            for (int i = 0; i<blocks.length; i++){
-//                ImageView tempImgVar = img.findViewById(i);
-//                tempImgVar.setImageDrawable(null);
-//            }
-//        }
-        public void checkWin(){
+
+        public void Move (View view){
+            if (!game)
+            {
+                resetGame(view);
+            }
+            img = (ImageView) view;
+            if (Turn == -1) {
+                blocks[Integer.parseInt(img.getTag().toString())] = new XBlock();
+                img.setImageResource(R.drawable.x);
+                Turn = 1;
+                textView.setText("O's turn to play!");
+            } else{
+                blocks[Integer.parseInt(img.getTag().toString())] = new OBlock();
+                img.setImageResource(R.drawable.o);
+                Turn = -1;
+                textView.setText("X's turn to play!");
+            }
+            checkWin();
+            checkGameDrawn();
+        }
+
+        public void reset (View view) //button
+        {
+            resetGame(view);
+        }
+
+        public void checkWin() {
             if ((blocks[0] instanceof XBlock && blocks[1] instanceof XBlock && blocks[2] instanceof XBlock) ||
                     (blocks[3] instanceof XBlock && blocks[4] instanceof XBlock && blocks[5] instanceof XBlock) ||
                     (blocks[6] instanceof XBlock && blocks[7] instanceof XBlock && blocks[8] instanceof XBlock) ||
@@ -49,10 +63,9 @@ import android.os.Bundle;
                     (blocks[0] instanceof XBlock && blocks[3] instanceof XBlock && blocks[6] instanceof XBlock) ||
                     (blocks[0] instanceof XBlock && blocks[4] instanceof XBlock && blocks[8] instanceof XBlock) ||
                     (blocks[1] instanceof XBlock && blocks[4] instanceof XBlock && blocks[7] instanceof XBlock) ||
-                    (blocks[2] instanceof XBlock && blocks[5] instanceof XBlock && blocks[8] instanceof XBlock) )
-            {
+                    (blocks[2] instanceof XBlock && blocks[5] instanceof XBlock && blocks[8] instanceof XBlock)) {
                 textView.setText("X has won");
-                gameState = 1;
+                game = false;
             } else if ((blocks[0] instanceof OBlock && blocks[1] instanceof OBlock && blocks[2] instanceof OBlock) ||
                     (blocks[3] instanceof OBlock && blocks[4] instanceof OBlock && blocks[5] instanceof OBlock) ||
                     (blocks[6] instanceof OBlock && blocks[7] instanceof OBlock && blocks[8] instanceof OBlock) ||
@@ -60,35 +73,43 @@ import android.os.Bundle;
                     (blocks[0] instanceof OBlock && blocks[3] instanceof OBlock && blocks[6] instanceof OBlock) ||
                     (blocks[0] instanceof OBlock && blocks[4] instanceof OBlock && blocks[8] instanceof OBlock) ||
                     (blocks[1] instanceof OBlock && blocks[4] instanceof OBlock && blocks[7] instanceof OBlock) ||
-                    (blocks[2] instanceof OBlock && blocks[5] instanceof OBlock && blocks[8] instanceof OBlock) )
-            {
+                    (blocks[2] instanceof OBlock && blocks[5] instanceof OBlock && blocks[8] instanceof OBlock)) {
                 textView.setText("O has won");
-                gameState = 1;
-            } else {
-                textView.setText("draw");
+                game = false;
             }
         }
 
-        public void Game(View view){
-            if (gameState == 0){
-                img = (ImageView) view;
-                if (Turn == -1) {
-                    blocks[Integer.parseInt(img.getTag().toString())] = new XBlock();
-                    checkWin();
-                    img.setImageResource(R.drawable.x);
-                }
-                if (Turn == 1){
-                    blocks[Integer.parseInt(img.getTag().toString())] = new OBlock();
-                    checkWin();
-                    img.setImageResource(R.drawable.o);
-                }
-                Turn *= -1;
+        public void resetGame(View view)
+        {
+            game = true;
+            Turn = -1;
+            for (int i = 0; i<blocks.length; i++)
+            {
+                blocks[i] = new Block();
             }
-//            if (gameState == 1){
-//                reset();
-//            }
+            ((ImageView) findViewById(R.id.imageView0)).setImageResource(0);
+            ((ImageView) findViewById(R.id.imageView1)).setImageResource(0);
+            ((ImageView) findViewById(R.id.imageView2)).setImageResource(0);
+            ((ImageView) findViewById(R.id.imageView3)).setImageResource(0);
+            ((ImageView) findViewById(R.id.imageView4)).setImageResource(0);
+            ((ImageView) findViewById(R.id.imageView5)).setImageResource(0);
+            ((ImageView) findViewById(R.id.imageView6)).setImageResource(0);
+            ((ImageView) findViewById(R.id.imageView7)).setImageResource(0);
+            ((ImageView) findViewById(R.id.imageView8)).setImageResource(0);
+            textView.setText("Tap to Play!");
         }
+
+        public void checkGameDrawn() {
+            for (Block cell : blocks) {
+                if (cell.getValue() == '-') {
+                    return; // there are still empty cells left on the grid
+                }
+            }
+            textView.setText("Game drawn!");
+        }
+
     }
+
 
  class Block {
     private char value;
